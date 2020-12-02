@@ -1,6 +1,5 @@
 package com.github.camilo.movierental.model;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.Entity;
@@ -16,7 +15,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Privilege implements Serializable {
+public class Privilege extends BaseEntity {
 
     private static final long serialVersionUID = 1262841716665463778L;
 

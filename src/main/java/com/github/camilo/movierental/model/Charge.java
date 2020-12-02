@@ -1,6 +1,5 @@
 package com.github.camilo.movierental.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
@@ -23,8 +22,10 @@ import lombok.Setter;
 @DiscriminatorColumn(name = "charge_type")
 @Getter
 @Setter
-public class Charge implements Serializable {
+public class Charge extends BaseEntity {
     
+    private static final long serialVersionUID = 5645216444576497528L;
+
     @Id
     @Column
     private long id;

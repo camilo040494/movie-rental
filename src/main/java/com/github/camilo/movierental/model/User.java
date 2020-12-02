@@ -1,6 +1,5 @@
 package com.github.camilo.movierental.model;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -22,7 +21,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class User implements Serializable {
+public class User extends BaseEntity {
 
     private static final long serialVersionUID = -1893059515548293821L;
 
