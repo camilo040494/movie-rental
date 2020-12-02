@@ -35,7 +35,7 @@ public class Charge extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
     
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "movie_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Movie movie;
     
