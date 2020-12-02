@@ -12,6 +12,6 @@ public abstract class BaseEntity implements Serializable {
 
     @Column
     @NotNull
-    private Boolean isDeleted;
+    protected Boolean isDeleted;
     
 }

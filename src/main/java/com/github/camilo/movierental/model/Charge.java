@@ -29,23 +29,23 @@ public class Charge extends BaseEntity {
 
     @Id
     @Column
-    private long id;
+    protected long id;
     
     @Column(unique = true)
-    private String transactionId;
+    protected String transactionId;
     
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    protected User user;
     
     @JoinColumn(name = "movie_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private Movie movie;
+    protected Movie movie;
     
     @Column
-    private OffsetDateTime fromDate;
+    protected OffsetDateTime fromDate;
     
     @Column
-    private BigDecimal cost;
+    protected BigDecimal cost;
     
 }

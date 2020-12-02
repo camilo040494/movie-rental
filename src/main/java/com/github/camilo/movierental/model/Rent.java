@@ -16,7 +16,6 @@ import lombok.Setter;
 @DiscriminatorValue(value = "RENT")
 public class Rent extends Charge {
     
-
     private static final long serialVersionUID = 3521819851810183806L;
 
     @Column

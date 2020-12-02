@@ -40,6 +40,11 @@ public class User extends BaseEntity {
     @OneToMany(fetch = FetchType.LAZY)
     private Set<Charge> history;
     
+    public void charge(Charge charge) {
+        charge.setUser(this);
+        history.add(charge);
+    }
+    
     @ManyToMany
     @JoinTable( 
             name = "user_movies", 
