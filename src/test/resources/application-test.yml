@@ -8,6 +8,6 @@ spring:
     password: sa
 movie:
   rental:
-    day:
-      of:
+    days:
+      for:
        renting: 3
