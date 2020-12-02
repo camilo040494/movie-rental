@@ -1,7 +1,6 @@
 package com.github.camilo.movierental.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import com.github.camilo.movierental.messages.MovieDto;
@@ -14,7 +13,6 @@ public interface MovieMapper {
     
     MovieDto map(Movie movie);
     
-    @Mapping(target = "id", ignore=true)
     Movie map(MovieDto movie);
     
 }
