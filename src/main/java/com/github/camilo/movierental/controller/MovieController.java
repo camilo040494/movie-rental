@@ -59,7 +59,7 @@ public class MovieController {
     @PutMapping(value = "/{id}")
     @ResponseBody
     public ResponseEntity<MovieDto> update(@PathVariable long id, @RequestBody MovieDto movieDto){
-        Optional<MovieDto> updated = movieService.update(movieDto);
+        Optional<MovieDto> updated = movieService.update(id, movieDto);
         if (updated.isPresent()) {
             return new ResponseEntity<MovieDto>(updated.get(), HttpStatus.OK);
         }

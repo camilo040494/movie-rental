@@ -11,8 +11,7 @@ public interface UserService{
     
     List<UserDto> list(Pageable pageable);
     UserDto create(UserDto userDto);
-    Optional<UserDto> update(UserDto userDto);
-    UserDto update(long id, UserDto userDto);
+    Optional<UserDto> update(long id, UserDto userDto);
     Optional<UserDto> getById(long id);
     void delete(long id);
     
