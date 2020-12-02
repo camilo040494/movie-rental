@@ -23,7 +23,7 @@ import lombok.Setter;
 @DiscriminatorColumn(name = "charge_type")
 @Getter
 @Setter
-public class Charge extends BaseEntity {
+public abstract class Charge extends BaseEntity {
     
     private static final long serialVersionUID = 5645216444576497528L;
 
@@ -47,5 +47,7 @@ public class Charge extends BaseEntity {
     
     @Column
     protected BigDecimal cost;
+    
+    public abstract BigDecimal calculateCost();
     
 }
