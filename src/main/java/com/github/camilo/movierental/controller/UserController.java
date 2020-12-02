@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,12 +41,12 @@ public class UserController {
     
     @GetMapping
     @ResponseBody
-    public ResponseEntity<UserDto> list(){
-        List<UserDto> list = userService.list();
+    public ResponseEntity<List<UserDto>> list(@RequestParam("page") int page, @RequestParam("numberOfResults") int numberOfResults){
+        List<UserDto> list = userService.list(PageRequest.of(page, numberOfResults));
         if (CollectionUtils.isNotEmpty(list)) {
-            return null;
+            return new ResponseEntity<List<UserDto>>(list, HttpStatus.OK);
         } else
-            return new ResponseEntity<UserDto>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<List<UserDto>>(HttpStatus.NOT_FOUND);
     }
     
     @PostMapping
