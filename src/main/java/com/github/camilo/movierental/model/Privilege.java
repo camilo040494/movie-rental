@@ -17,7 +17,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Privilege implements Serializable {
- 
+
+    private static final long serialVersionUID = 1262841716665463778L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

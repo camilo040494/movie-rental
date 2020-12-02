@@ -7,7 +7,6 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
@@ -25,7 +24,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class Movie implements Serializable{
-    
+
+    private static final long serialVersionUID = 3106606717363470026L;
+
     @Id
     @Column
     private long id;

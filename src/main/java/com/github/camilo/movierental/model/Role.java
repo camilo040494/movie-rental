@@ -20,6 +20,8 @@ import lombok.Setter;
 @Setter
 public class Role implements Serializable {
  
+    private static final long serialVersionUID = 8982355536606284333L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
