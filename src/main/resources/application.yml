@@ -1,0 +1,5 @@
+movie:
+  rental:
+    day:
+      of:
+       renting: 3
