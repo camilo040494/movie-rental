@@ -3,21 +3,22 @@ package com.github.camilo.movierental.model;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
+import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Table(name = "charge")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "charge_type")
 @Getter

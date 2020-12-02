@@ -8,17 +8,18 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-
-import org.springframework.data.annotation.Id;
+import javax.persistence.Table;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
+@Table(name = "user")
 @Getter
 @Setter
 public class User extends BaseEntity {

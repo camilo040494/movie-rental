@@ -3,10 +3,9 @@ package com.github.camilo.movierental.model;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-
-import org.springframework.data.relational.core.mapping.Column;
 
 import lombok.Getter;
 import lombok.Setter;
