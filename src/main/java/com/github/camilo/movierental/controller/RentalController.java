@@ -13,23 +13,23 @@ import com.github.camilo.movierental.model.OperationEnum;
 import com.github.camilo.movierental.service.RentalService;
 
 @RestController
-@RequestMapping("/rent")
+@RequestMapping("/charge")
 public class RentalController{
     
     @Autowired
-    private RentalService rentService;
+    private RentalService rentalService;
     
-    @PostMapping(value = "/{id}")
+    @PostMapping(value = "/rent/{id}")
     @ResponseBody
     public ResponseEntity<Boolean> rentMovie(@PathVariable long movieId){
-        rentService.charge(OperationEnum.RENT, movieId);
+        rentalService.charge(OperationEnum.RENT, movieId);
         return new ResponseEntity<Boolean>(HttpStatus.OK);
     }
     
-    @PostMapping(value = "/{id}")
+    @PostMapping(value = "/buy/{id}")
     @ResponseBody
     public ResponseEntity<Boolean> buyMovie(@PathVariable long movieId){
-        rentService.charge(OperationEnum.BUY, movieId);
+        rentalService.charge(OperationEnum.BUY, movieId);
         return new ResponseEntity<Boolean>(HttpStatus.OK);
     }
     
