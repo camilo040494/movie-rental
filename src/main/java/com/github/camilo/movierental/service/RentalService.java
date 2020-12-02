@@ -1,9 +1,15 @@
 package com.github.camilo.movierental.service;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+
+import com.github.camilo.movierental.messages.TransactionDto;
 import com.github.camilo.movierental.model.OperationEnum;
 
 public interface RentalService{
     
-    void charge(OperationEnum operationEnum, long movieId);
+    Optional<TransactionDto> charge(OperationEnum operationEnum, long movieId);
+    
+    Optional<BigDecimal> returnMovie(String transactionId);
     
 }

@@ -31,6 +31,9 @@ public class Charge extends BaseEntity {
     @Column
     private long id;
     
+    @Column(unique = true)
+    private String transactionId;
+    
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
