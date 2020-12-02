@@ -7,11 +7,10 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.springframework.data.annotation.Id;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

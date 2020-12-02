@@ -5,9 +5,8 @@ import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-
-import org.springframework.data.annotation.Id;
 
 import lombok.Getter;
 import lombok.Setter;
