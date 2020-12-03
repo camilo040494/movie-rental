@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +46,13 @@ public class RentalController{
 		if (charge.isPresent()) {
             return new ResponseEntity<BigDecimal>(charge.get(), HttpStatus.OK);
         }
-        return new ResponseEntity<BigDecimal>(HttpStatus.OK);
+        return new ResponseEntity<BigDecimal>(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+    @GetMapping(value = "/profits")
+    public ResponseEntity<BigDecimal> getProfits(){
+        BigDecimal profits = rentalService.calculateProfits();
+        return new ResponseEntity<BigDecimal>(profits, HttpStatus.OK);
     }
     
     @PostMapping(value = "/buy/{movieId}")

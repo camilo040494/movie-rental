@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.camilo.movierental.messages.TransactionDto;
+import com.github.camilo.movierental.model.Charge;
 import com.github.camilo.movierental.model.Movie;
 import com.github.camilo.movierental.model.OperationEnum;
 import com.github.camilo.movierental.model.Rent;
@@ -16,13 +17,17 @@ import com.github.camilo.movierental.repository.ChargeRepository;
 import com.github.camilo.movierental.repository.MovieRepository;
 import com.github.camilo.movierental.repository.UserRepository;
 import com.github.camilo.movierental.service.ChargeOperationStrategy;
+import com.github.camilo.movierental.service.RentOperationService;
 import com.github.camilo.movierental.service.RentalService;
 
 @Service
 public class RentalServiceImpl implements RentalService {
 
     @Autowired
-    private ChargeRepository<Rent> chargeRepository;
+    private ChargeRepository<Charge> chargeRepository;
+    
+    @Autowired
+    private RentOperationService rentOperationService;
     
     @Autowired
     private EnumMap<OperationEnum, ChargeOperationStrategy> chargeOperationStrategy;
@@ -51,16 +56,20 @@ public class RentalServiceImpl implements RentalService {
 
     @Override
     public Optional<BigDecimal> returnMovie(String transactionId, String userEmail) {
-        Optional<Rent> optionalRentedMovie = chargeRepository.getByTransactionId(transactionId);
-        if (optionalRentedMovie.isPresent()) {
-            Rent rentedMovie = optionalRentedMovie.get();
-            rentedMovie.setReturned(true);
-            rentedMovie.getMovie().addStock();
-            chargeRepository.save(rentedMovie);
-            return Optional.ofNullable(rentedMovie.calculateCost());
-        } else {            
-            return Optional.empty();
+        return rentOperationService.returnMovie(transactionId, userEmail);
+    }
+
+    @Override
+    public BigDecimal calculateProfits() {
+        BigDecimal profits = new BigDecimal(0);
+        Iterable<Charge> findAll = chargeRepository.findAll();
+        for (Charge profit : findAll) {
+            Optional<BigDecimal> calculateCost = profit.calculateCost();
+            if(calculateCost.isPresent()) {
+                profits = profits.add(calculateCost.get());
+            }
         }
+        return profits;
     }
 
 }

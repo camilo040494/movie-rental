@@ -91,6 +91,9 @@ class MovieRentalApplicationTests {
             String buyTransaction = buyOperation.getResponse().getContentAsString();
             System.out.println(buyTransaction);
             
+            MvcResult profitsResult = mockMvc.perform(get("/charge/profits").principal(principal))
+                    .andExpect(status().isOk()).andReturn();
+            System.out.println(profitsResult.getResponse().getContentAsString());
             
             mockMvc.perform(get("/movies")
                     .queryParam("page", "0")

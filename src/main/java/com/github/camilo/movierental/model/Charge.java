@@ -2,6 +2,7 @@ package com.github.camilo.movierental.model;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+import java.util.Optional;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -50,6 +51,6 @@ public abstract class Charge extends BaseEntity {
     @Column
     protected BigDecimal cost;
     
-    public abstract BigDecimal calculateCost();
+    public abstract Optional<BigDecimal> calculateCost();
     
 }

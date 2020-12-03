@@ -11,5 +11,7 @@ public interface RentalService{
     Optional<TransactionDto> charge(String userEmail, OperationEnum operationEnum, long movieId);
     
     Optional<BigDecimal> returnMovie(String transactionId, String userEmail);
+
+    BigDecimal calculateProfits();
     
 }

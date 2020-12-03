@@ -3,6 +3,7 @@ package com.github.camilo.movierental.model;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -31,11 +32,11 @@ public class Rent extends Charge {
     private Boolean returned;
     
     @Override
-    public BigDecimal calculateCost() {
+    public Optional<BigDecimal> calculateCost() {
         if(Objects.nonNull(penalty)) {
-            return cost.add(penalty);
+            return Optional.of(penalty.add(cost));
         }
-        return cost;
+        return Optional.ofNullable(cost);
     }
     
 }
