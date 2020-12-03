@@ -17,10 +17,7 @@ class UserMapperTest {
     
     @Test
     void testUserToDto() {
-        User user = new User();
-        user.setEmail(EMAIL);
-        user.setFirstName(FIRST_NAME);
-        user.setLastName(LAST_NAME);
+        User user = buildUser();
         UserDto map = mapper.map(user);
         assertNotNull(map);
         assertNotNull(map.getEmail());
@@ -29,6 +26,14 @@ class UserMapperTest {
         assertEquals(EMAIL, map.getEmail());
         assertEquals(FIRST_NAME, map.getFirstName());
         assertEquals(LAST_NAME, map.getLastName());
+    }
+
+    public static User buildUser() {
+        User user = new User();
+        user.setEmail(EMAIL);
+        user.setFirstName(FIRST_NAME);
+        user.setLastName(LAST_NAME);
+        return user;
     }
     
     @Test

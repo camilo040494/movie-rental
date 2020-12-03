@@ -11,25 +11,15 @@ import org.junit.jupiter.api.Test;
 import com.github.camilo.movierental.messages.MovieDto;
 import com.github.camilo.movierental.model.Movie;
 
-class MovieMapperTest {
+public class MovieMapperTest {
 
     private static final String TITTLE = "tittle";
-    private static final String DESCRIPTION = "description";
+    public static final String DESCRIPTION = "description";
     MovieMapper instance = MovieMapper.INSTANCE;
     
     @Test
     void testMovieToDto() {
-        Movie movie = new Movie();
-        movie.setAvailability(true);
-        movie.setDescription(DESCRIPTION);
-        movie.setHistory(Sets.newHashSet());
-        movie.setImage(new byte[]{0});
-        movie.setIsDeleted(false);
-        movie.setLikedUsers(Lists.newArrayList());
-        movie.setRentalPrice(new BigDecimal(12));
-        movie.setSalePrice(new BigDecimal(7));
-        movie.setStock(0);
-        movie.setTittle(TITTLE);
+        Movie movie = buildMovie();
         MovieDto map = MovieMapper.INSTANCE.map(movie);
         assertNotNull(map);
         assertNotNull(map.getAvailability());
@@ -41,18 +31,25 @@ class MovieMapperTest {
         assertNotNull(map.getRentalPrice());
         assertNotNull(map.getSalePrice());
     }
-    
-    @Test
-    void testDtoToMovie() {
-        MovieDto movie = new MovieDto();
+
+    public static Movie buildMovie() {
+        Movie movie = new Movie();
         movie.setAvailability(true);
         movie.setDescription(DESCRIPTION);
+        movie.setHistory(Sets.newHashSet());
         movie.setImage(new byte[]{0});
         movie.setIsDeleted(false);
+        movie.setLikedUsers(Lists.newArrayList());
         movie.setRentalPrice(new BigDecimal(12));
         movie.setSalePrice(new BigDecimal(7));
         movie.setStock(0);
         movie.setTittle(TITTLE);
+        return movie;
+    }
+    
+    @Test
+    void testDtoToMovie() {
+        MovieDto movie = buildMovieDto();
         Movie map = instance.map(movie);
         assertNotNull(map);
         assertNotNull(map.getAvailability());
@@ -63,6 +60,19 @@ class MovieMapperTest {
         assertNotNull(map.getIsDeleted());
         assertNotNull(map.getRentalPrice());
         assertNotNull(map.getSalePrice());
+    }
+
+    public static MovieDto buildMovieDto() {
+        MovieDto movie = new MovieDto();
+        movie.setAvailability(true);
+        movie.setDescription(DESCRIPTION);
+        movie.setImage(new byte[]{0});
+        movie.setIsDeleted(false);
+        movie.setRentalPrice(new BigDecimal(12));
+        movie.setSalePrice(new BigDecimal(7));
+        movie.setStock(0);
+        movie.setTittle(TITTLE);
+        return movie;
     }
 
 }

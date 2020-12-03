@@ -1,7 +1,9 @@
 package com.github.camilo.movierental.model;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -43,8 +45,6 @@ public class Movie extends BaseEntity {
     private Boolean availability;
     @Column
     private byte[] image;
-    @Column
-    private Boolean isDeleted;
     
     @OneToMany(fetch = FetchType.LAZY)
     private Set<Charge> history;
@@ -53,6 +53,9 @@ public class Movie extends BaseEntity {
     private List<User> likedUsers;
     
     public void charge(Charge charge) {
+        if (Objects.isNull(likedUsers)) {
+            likedUsers = new ArrayList<User>();
+        }
         charge.setMovie(this);
         history.add(charge);
     }

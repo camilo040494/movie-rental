@@ -1,7 +1,9 @@
 package com.github.camilo.movierental.model;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -41,11 +43,14 @@ public class User extends BaseEntity {
     private Set<Charge> history;
     
     public void charge(Charge charge) {
+        if (Objects.isNull(history)) {
+            history = new HashSet<Charge>();
+        }
         charge.setUser(this);
         history.add(charge);
     }
     
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable( 
             name = "user_movies", 
             joinColumns = @JoinColumn(
