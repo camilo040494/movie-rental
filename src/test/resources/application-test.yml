@@ -6,6 +6,9 @@ spring:
     driverClassName: org.h2.Driver
     username: sa
     password: sa
+  security:
+    jwt:
+      disable: true
 movie:
   rental:
     days:

@@ -1,3 +1,7 @@
+spring:
+  security:
+    secret:
+      key: secreto
 movie:
   rental:
     days:
