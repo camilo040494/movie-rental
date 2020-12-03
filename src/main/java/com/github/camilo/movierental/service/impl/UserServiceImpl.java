@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.github.camilo.movierental.mapper.UserMapper;
@@ -19,6 +20,9 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepository userRepository;
     
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    
     @Override
     public List<UserDto> list(Pageable pageable) {
         List<User> users = userRepository.findAll(pageable).toList();
@@ -28,6 +32,8 @@ public class UserServiceImpl implements UserService{
     @Override
     public UserDto create(UserDto userDto) {
         User user = UserMapper.INSTANCE.map(userDto);
+        user.setPassword(bCryptPasswordEncoder.encode(userDto.getPassword()));
+        user.setDeleted(false);
         user = userRepository.save(user);
         return UserMapper.INSTANCE.map(user);
     }

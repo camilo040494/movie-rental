@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +27,7 @@ public class RentalController{
     @PostMapping(value = "/rent/{movieId}")
     @ResponseBody
     public ResponseEntity<TransactionDto> rentMovie(@PathVariable long movieId,
-            @AuthenticationPrincipal Principal principal){
+            Principal principal){
         Optional<TransactionDto> transaction = rentalService.charge(principal.getName(),
                 OperationEnum.RENT, movieId);
         if (transaction.isPresent()) {
@@ -40,7 +39,7 @@ public class RentalController{
     @PostMapping(value = "/return/{transactionId}")
     @ResponseBody
     public ResponseEntity<BigDecimal> returnMovie(@PathVariable String transactionId,
-            @AuthenticationPrincipal Principal principal){
+            Principal principal){
         Optional<BigDecimal> charge = rentalService.returnMovie(principal.getName(),
                 transactionId);
 		if (charge.isPresent()) {
@@ -52,7 +51,7 @@ public class RentalController{
     @PostMapping(value = "/buy/{movieId}")
     @ResponseBody
     public ResponseEntity<TransactionDto> buyMovie(@PathVariable long movieId,
-            @AuthenticationPrincipal Principal principal){
+            Principal principal){
         Optional<TransactionDto> transaction = rentalService.charge(principal.getName(),
                 OperationEnum.BUY, movieId);
         if (transaction.isPresent()) {

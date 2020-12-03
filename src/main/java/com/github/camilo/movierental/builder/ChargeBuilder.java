@@ -11,9 +11,8 @@ import com.github.camilo.movierental.model.User;
 public abstract class ChargeBuilder<T extends Charge> {
     
     protected T charge;
-    private Class<T> clazz;
     
-    public ChargeBuilder() {
+    public ChargeBuilder(Class<T> clazz) {
         try {
             charge = clazz.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
@@ -22,8 +21,8 @@ public abstract class ChargeBuilder<T extends Charge> {
     }
     
     public ChargeBuilder<T> buildEmptyEntity() {
-        charge.setFromDate(null);
-        charge.setIsDeleted(false);
+        charge.setDeleted(false);
+        charge.setFromDate(OffsetDateTime.now());
         charge.setTransactionId(UUID.randomUUID().toString());
         return this;
     }
@@ -39,7 +38,7 @@ public abstract class ChargeBuilder<T extends Charge> {
     }
     
     public ChargeBuilder<T> withIsDeleted(boolean isDeleted) {
-        charge.setIsDeleted(isDeleted);
+        charge.setDeleted(isDeleted);
         return this;
     }
     

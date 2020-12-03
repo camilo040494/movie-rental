@@ -1,11 +1,15 @@
 package com.github.camilo.movierental;
 
 import static com.github.camilo.movierental.mapper.MovieMapperTest.DESCRIPTION;
+import static com.github.camilo.movierental.mapper.UserMapperTest.EMAIL;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.io.UnsupportedEncodingException;
+import java.security.Principal;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,8 +21,11 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.camilo.movierental.mapper.MovieMapperTest;
+import com.github.camilo.movierental.mapper.UserMapperTest;
+import com.github.camilo.movierental.messages.MovieDto;
 
 @SpringBootTest
 class MovieRentalApplicationTests {
@@ -29,7 +36,7 @@ class MovieRentalApplicationTests {
     private WebApplicationContext wac;
     
     @Autowired
-    private ObjectMapper objectMapper;
+    private ObjectMapper objectMapperTest;
     
     @BeforeEach
     public void setup() {
@@ -45,15 +52,52 @@ class MovieRentalApplicationTests {
         }
     }
     @Test
-    void contextLoadsAdd() {
+    void contextLoadsAdd() throws Exception {
         try {
-            String content = objectMapper.writeValueAsString(MovieMapperTest.buildMovieDto());
-            mockMvc.perform(post("/movies")
+            String userContent = objectMapperTest.writeValueAsString(UserMapperTest
+                    .buildUserDto());
+            mockMvc.perform(post("/users")
+                    .contentType(MediaType.APPLICATION_JSON).content(userContent))
+            .andExpect(status().isCreated())
+            .andExpect(jsonPath("$.email").value(EMAIL));
+            
+            String content = objectMapperTest.writeValueAsString(MovieMapperTest
+                    .buildMovieDto());
+            MvcResult response = mockMvc.perform(post("/movies")
                     .contentType(MediaType.APPLICATION_JSON).content(content))
             .andExpect(status().isCreated())
-            .andExpect(jsonPath("$.description").value(DESCRIPTION));
-            mockMvc.perform(get("/movies").queryParam("page", "0").queryParam("numberOfResults", "1")).andExpect(status().isOk());
-        } catch (Exception e) {
+            .andExpect(jsonPath("$.description").value(DESCRIPTION)).andReturn();
+            String contentAsString = response.getResponse().getContentAsString();
+            
+            System.out.println(contentAsString);
+            
+            Principal principal = new Principal() {
+                @Override
+                public String getName() {
+                    return EMAIL;
+                }
+            };
+            MovieDto readValue = objectMapperTest.readValue(contentAsString, MovieDto.class);
+            Long movie = readValue.getId();
+            MvcResult andReturn = mockMvc.perform(post("/charge/rent/"+movie).principal(principal)
+                    .contentType(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk()).andReturn();
+            String transaction = andReturn.getResponse().getContentAsString();
+            System.out.println(transaction);
+            
+            MvcResult buyOperation = mockMvc.perform(post("/charge/buy/"+movie).principal(principal)
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk()).andReturn();
+            String buyTransaction = buyOperation.getResponse().getContentAsString();
+            System.out.println(buyTransaction);
+            
+            
+            mockMvc.perform(get("/movies")
+                    .queryParam("page", "0")
+                    .queryParam("numberOfResults", "1"))
+            .andExpect(status().isOk());
+            
+        } catch (JsonProcessingException | UnsupportedEncodingException e) {
             fail(e.getMessage()+"\n"+e.getLocalizedMessage()+"\n"+e.getCause().toString());
         }
     }

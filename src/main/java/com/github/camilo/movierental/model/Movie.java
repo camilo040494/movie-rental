@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -28,7 +30,7 @@ public class Movie extends BaseEntity {
     private static final long serialVersionUID = 3106606717363470026L;
 
     @Id
-    @Column
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     
     @Column
@@ -58,6 +60,14 @@ public class Movie extends BaseEntity {
         }
         charge.setMovie(this);
         history.add(charge);
+    }
+    
+    public void addStock() {
+        stock++;
+    }
+    
+    public void substractStock() {
+        stock--;
     }
     
 }

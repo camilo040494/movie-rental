@@ -32,11 +32,16 @@ public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
- 
+    
+    @Column
     private String firstName;
+    
+    @Column
     private String lastName;
     @Column(unique = true)
     private String email;
+    
+    @Column
     private String password;
     private boolean enabled;
     private boolean tokenExpired;

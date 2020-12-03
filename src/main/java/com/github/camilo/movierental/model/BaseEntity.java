@@ -10,8 +10,13 @@ import lombok.Data;
 @Data
 public abstract class BaseEntity implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -5805894828971268428L;
+    
     @Column
     @NotNull
-    protected Boolean isDeleted;
+    private boolean isDeleted;
     
 }

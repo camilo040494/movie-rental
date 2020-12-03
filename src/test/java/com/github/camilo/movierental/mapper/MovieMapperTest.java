@@ -38,7 +38,7 @@ public class MovieMapperTest {
         movie.setDescription(DESCRIPTION);
         movie.setHistory(Sets.newHashSet());
         movie.setImage(new byte[]{0});
-        movie.setIsDeleted(false);
+        movie.setDeleted(false);
         movie.setLikedUsers(Lists.newArrayList());
         movie.setRentalPrice(new BigDecimal(12));
         movie.setSalePrice(new BigDecimal(7));
@@ -57,7 +57,7 @@ public class MovieMapperTest {
         assertEquals(DESCRIPTION, map.getDescription());
         assertNotNull(map.getTittle());
         assertEquals(TITTLE, map.getTittle());
-        assertNotNull(map.getIsDeleted());
+        assertNotNull(map.isDeleted());
         assertNotNull(map.getRentalPrice());
         assertNotNull(map.getSalePrice());
     }
@@ -70,7 +70,7 @@ public class MovieMapperTest {
         movie.setIsDeleted(false);
         movie.setRentalPrice(new BigDecimal(12));
         movie.setSalePrice(new BigDecimal(7));
-        movie.setStock(0);
+        movie.setStock(2);
         movie.setTittle(TITTLE);
         return movie;
     }

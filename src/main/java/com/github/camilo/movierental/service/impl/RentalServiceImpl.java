@@ -2,7 +2,6 @@ package com.github.camilo.movierental.service.impl;
 
 import java.math.BigDecimal;
 import java.util.EnumMap;
-import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +42,8 @@ public class RentalServiceImpl implements RentalService {
         }
         Optional<Movie> findById = movieRepository.findById(Long.valueOf(movieId));
         if (findById.isPresent()) {
-            return chargeOperationStrategy.get(operationEnum).charge(findByEmail.get(), findById.get());
+            return chargeOperationStrategy.get(operationEnum)
+                    .charge(findByEmail.get(), findById.get());
         }
         //deberia ser una exception TODO
         return Optional.empty();
@@ -55,6 +55,7 @@ public class RentalServiceImpl implements RentalService {
         if (optionalRentedMovie.isPresent()) {
             Rent rentedMovie = optionalRentedMovie.get();
             rentedMovie.setReturned(true);
+            rentedMovie.getMovie().addStock();
             chargeRepository.save(rentedMovie);
             return Optional.ofNullable(rentedMovie.calculateCost());
         } else {            

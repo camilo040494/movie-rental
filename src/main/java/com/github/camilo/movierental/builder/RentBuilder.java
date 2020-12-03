@@ -8,7 +8,7 @@ import com.github.camilo.movierental.model.Rent;
 public class RentBuilder extends ChargeBuilder<Rent>{
 
     public RentBuilder() {
-        super();
+        super(Rent.class);
     }
     
     public RentBuilder withUntilDate(OffsetDateTime untilDate) {

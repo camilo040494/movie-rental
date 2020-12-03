@@ -9,6 +9,7 @@ import lombok.Data;
 @Data
 public class MovieDto implements Serializable{
     
+    private Long id;
     private String tittle;
     private String description;
     private int stock;
