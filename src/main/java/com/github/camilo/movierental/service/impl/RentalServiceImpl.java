@@ -12,8 +12,10 @@ import com.github.camilo.movierental.messages.TransactionDto;
 import com.github.camilo.movierental.model.Movie;
 import com.github.camilo.movierental.model.OperationEnum;
 import com.github.camilo.movierental.model.Rent;
+import com.github.camilo.movierental.model.User;
 import com.github.camilo.movierental.repository.ChargeRepository;
 import com.github.camilo.movierental.repository.MovieRepository;
+import com.github.camilo.movierental.repository.UserRepository;
 import com.github.camilo.movierental.service.ChargeOperationStrategy;
 import com.github.camilo.movierental.service.RentalService;
 
@@ -29,29 +31,32 @@ public class RentalServiceImpl implements RentalService {
     @Autowired
     private MovieRepository movieRepository;
     
+    @Autowired
+    private UserRepository userRepository;
+    
     @Override
-    public Optional<TransactionDto> charge(OperationEnum operationEnum, long movieId) {
+    public Optional<TransactionDto> charge(String userEmail, OperationEnum operationEnum,
+            long movieId) {
+        Optional<User> findByEmail = userRepository.findByEmail(userEmail);
+        if (findByEmail.isEmpty()) {
+            throw new RuntimeException("User not found");
+        }
         Optional<Movie> findById = movieRepository.findById(Long.valueOf(movieId));
         if (findById.isPresent()) {
-            //TODO retreive the user
-            return chargeOperationStrategy.get(operationEnum).charge(null, findById.get());
+            return chargeOperationStrategy.get(operationEnum).charge(findByEmail.get(), findById.get());
         }
         //deberia ser una exception TODO
         return Optional.empty();
     }
 
     @Override
-    public Optional<BigDecimal> returnMovie(String transactionId) {
+    public Optional<BigDecimal> returnMovie(String transactionId, String userEmail) {
         Optional<Rent> optionalRentedMovie = chargeRepository.getByTransactionId(transactionId);
         if (optionalRentedMovie.isPresent()) {
             Rent rentedMovie = optionalRentedMovie.get();
-            BigDecimal penalty = rentedMovie.getPenalty();
-            BigDecimal cost = rentedMovie.getCost();
-            if (Objects.isNull(penalty)) {
-                return Optional.ofNullable(cost);
-            } else {
-                return Optional.of(cost.add(penalty));
-            }
+            rentedMovie.setReturned(true);
+            chargeRepository.save(rentedMovie);
+            return Optional.ofNullable(rentedMovie.calculateCost());
         } else {            
             return Optional.empty();
         }

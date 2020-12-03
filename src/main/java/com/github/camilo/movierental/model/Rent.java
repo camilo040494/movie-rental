@@ -27,6 +27,9 @@ public class Rent extends Charge {
     @Column
     private BigDecimal penalty;
     
+    @Column
+    private Boolean returned;
+    
     @Override
     public BigDecimal calculateCost() {
         if(Objects.nonNull(penalty)) {

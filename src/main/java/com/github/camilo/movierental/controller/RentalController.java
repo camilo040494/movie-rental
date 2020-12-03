@@ -1,11 +1,13 @@
 package com.github.camilo.movierental.controller;
 
 import java.math.BigDecimal;
+import java.security.Principal;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +27,10 @@ public class RentalController{
     
     @PostMapping(value = "/rent/{movieId}")
     @ResponseBody
-    public ResponseEntity<TransactionDto> rentMovie(@PathVariable long movieId){
-        Optional<TransactionDto> transaction = rentalService.charge(OperationEnum.RENT, movieId);
+    public ResponseEntity<TransactionDto> rentMovie(@PathVariable long movieId,
+            @AuthenticationPrincipal Principal principal){
+        Optional<TransactionDto> transaction = rentalService.charge(principal.getName(),
+                OperationEnum.RENT, movieId);
         if (transaction.isPresent()) {
             return new ResponseEntity<TransactionDto>(transaction.get(), HttpStatus.OK);
         }
@@ -35,8 +39,10 @@ public class RentalController{
     
     @PostMapping(value = "/return/{transactionId}")
     @ResponseBody
-    public ResponseEntity<BigDecimal> returnMovie(@PathVariable String transactionId){
-        Optional<BigDecimal> charge = rentalService.returnMovie(transactionId);
+    public ResponseEntity<BigDecimal> returnMovie(@PathVariable String transactionId,
+            @AuthenticationPrincipal Principal principal){
+        Optional<BigDecimal> charge = rentalService.returnMovie(principal.getName(),
+                transactionId);
 		if (charge.isPresent()) {
             return new ResponseEntity<BigDecimal>(charge.get(), HttpStatus.OK);
         }
@@ -45,8 +51,10 @@ public class RentalController{
     
     @PostMapping(value = "/buy/{movieId}")
     @ResponseBody
-    public ResponseEntity<TransactionDto> buyMovie(@PathVariable long movieId){
-        Optional<TransactionDto> transaction = rentalService.charge(OperationEnum.BUY, movieId);
+    public ResponseEntity<TransactionDto> buyMovie(@PathVariable long movieId,
+            @AuthenticationPrincipal Principal principal){
+        Optional<TransactionDto> transaction = rentalService.charge(principal.getName(),
+                OperationEnum.BUY, movieId);
         if (transaction.isPresent()) {
             return new ResponseEntity<TransactionDto>(transaction.get(), HttpStatus.OK);
         }

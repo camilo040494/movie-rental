@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -34,6 +35,7 @@ public class User extends BaseEntity {
  
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String email;
     private String password;
     private boolean enabled;

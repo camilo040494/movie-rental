@@ -48,15 +48,11 @@ class MovieRentalApplicationTests {
     void contextLoadsAdd() {
         try {
             String content = objectMapper.writeValueAsString(MovieMapperTest.buildMovieDto());
-            System.out.println(content);
-            System.out.println("---");
-            MvcResult andReturn = mockMvc.perform(post("/movies")
+            mockMvc.perform(post("/movies")
                     .contentType(MediaType.APPLICATION_JSON).content(content))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.description").value(DESCRIPTION)).andReturn();
-            System.out.println("-+-");
-            System.out.println(andReturn.getResponse().toString());
-            System.out.println("-+-");
+            .andExpect(status().isCreated())
+            .andExpect(jsonPath("$.description").value(DESCRIPTION));
+            mockMvc.perform(get("/movies").queryParam("page", "0").queryParam("numberOfResults", "1")).andExpect(status().isOk());
         } catch (Exception e) {
             fail(e.getMessage()+"\n"+e.getLocalizedMessage()+"\n"+e.getCause().toString());
         }

@@ -25,6 +25,7 @@ public class RentBuilder extends ChargeBuilder<Rent>{
         super.buildEmptyEntity();
         OffsetDateTime fromDate = charge.getFromDate();
         charge.setUntilDate(fromDate.plusDays(daysForRenting));
+        charge.setReturned(false);
         return this;
     }
     

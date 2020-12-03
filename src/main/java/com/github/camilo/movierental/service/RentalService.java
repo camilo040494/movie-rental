@@ -8,8 +8,8 @@ import com.github.camilo.movierental.model.OperationEnum;
 
 public interface RentalService{
     
-    Optional<TransactionDto> charge(OperationEnum operationEnum, long movieId);
+    Optional<TransactionDto> charge(String userEmail, OperationEnum operationEnum, long movieId);
     
-    Optional<BigDecimal> returnMovie(String transactionId);
+    Optional<BigDecimal> returnMovie(String transactionId, String userEmail);
     
 }
