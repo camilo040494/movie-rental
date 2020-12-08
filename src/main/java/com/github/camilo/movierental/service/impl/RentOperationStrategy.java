@@ -53,7 +53,7 @@ public class RentOperationStrategy extends AbstractChargeOperationStrategy<Rent>
     
     public void addStock(Movie movie) {
         if (Objects.nonNull(movie)) {
-            movie.setStock(movie.getStock()+1));
+            movie.setStock(movie.getStock()+1);
         }
     }
 
