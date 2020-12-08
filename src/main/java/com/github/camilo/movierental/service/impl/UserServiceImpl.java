@@ -1,5 +1,7 @@
 package com.github.camilo.movierental.service.impl;
 
+import static com.github.camilo.movierental.exception.ExceptionConstants.USER_NOT_FOUND_EXCEPTION_MESSAGE;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -8,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.github.camilo.movierental.exception.UserNotFoundException;
 import com.github.camilo.movierental.mapper.UserMapper;
 import com.github.camilo.movierental.messages.UserDto;
 import com.github.camilo.movierental.model.User;
@@ -15,7 +18,7 @@ import com.github.camilo.movierental.repository.UserRepository;
 import com.github.camilo.movierental.service.UserService;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
@@ -47,7 +50,7 @@ public class UserServiceImpl implements UserService{
             user = userRepository.save(user);
             return Optional.of(UserMapper.INSTANCE.map(user));
         }
-        return Optional.empty();
+        throw new UserNotFoundException(USER_NOT_FOUND_EXCEPTION_MESSAGE);
     }
 
     @Override
@@ -56,7 +59,7 @@ public class UserServiceImpl implements UserService{
         if (findById.isPresent()) {
             return Optional.of(UserMapper.INSTANCE.map(findById.get()));            
         }
-        return Optional.empty();
+        throw new UserNotFoundException(USER_NOT_FOUND_EXCEPTION_MESSAGE);
     }
 
     @Override

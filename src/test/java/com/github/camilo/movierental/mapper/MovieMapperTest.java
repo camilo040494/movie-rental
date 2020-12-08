@@ -39,7 +39,7 @@ public class MovieMapperTest {
         movie.setHistory(Sets.newHashSet());
         movie.setImage(new byte[]{0});
         movie.setDeleted(false);
-        movie.setLikedUsers(Lists.newArrayList());
+        movie.setLikedUsers(Sets.newHashSet());
         movie.setRentalPrice(new BigDecimal(12));
         movie.setSalePrice(new BigDecimal(7));
         movie.setStock(0);

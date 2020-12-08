@@ -1,10 +1,10 @@
 package com.github.camilo.movierental.model;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,7 +25,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Movie extends BaseEntity {
+public class Movie extends BaseEntity implements Payable {
 
     private static final long serialVersionUID = 3106606717363470026L;
 
@@ -52,14 +52,22 @@ public class Movie extends BaseEntity {
     private Set<Charge> history;
     
     @ManyToMany
-    private List<User> likedUsers;
+    private Set<User> likedUsers;
     
+    @Override
     public void charge(Charge charge) {
-        if (Objects.isNull(likedUsers)) {
-            likedUsers = new ArrayList<User>();
+        if (Objects.isNull(history)) {
+            history = new HashSet<Charge>();
         }
         charge.setMovie(this);
         history.add(charge);
+    }
+    
+    public void likeUser(User user) {
+        if (Objects.isNull(likedUsers)) {
+            likedUsers = new TreeSet<User>();
+        }
+        likedUsers.add(user);
     }
     
     public void addStock() {

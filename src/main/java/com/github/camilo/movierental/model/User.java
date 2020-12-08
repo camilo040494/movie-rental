@@ -2,9 +2,9 @@ package com.github.camilo.movierental.model;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,19 +43,13 @@ public class User extends BaseEntity {
     
     @Column
     private String password;
+    @Column
     private boolean enabled;
+    @Column
     private boolean tokenExpired;
     
     @OneToMany(fetch = FetchType.LAZY)
     private Set<Charge> history;
-    
-    public void charge(Charge charge) {
-        if (Objects.isNull(history)) {
-            history = new HashSet<Charge>();
-        }
-        charge.setUser(this);
-        history.add(charge);
-    }
     
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable( 
@@ -64,7 +58,7 @@ public class User extends BaseEntity {
                     name = "user_id", referencedColumnName = "id"), 
             inverseJoinColumns = @JoinColumn(
                     name = "movie_id", referencedColumnName = "id")) 
-    private List<Movie> likedMovies;
+    private Set<Movie> likedMovies;
  
     @ManyToMany 
     @JoinTable( 
@@ -74,4 +68,19 @@ public class User extends BaseEntity {
         inverseJoinColumns = @JoinColumn(
           name = "role_id", referencedColumnName = "id")) 
     private Collection<Role> roles;
+    
+    public void charge(Charge charge) {
+        if (Objects.isNull(history)) {
+            history = new HashSet<Charge>();
+        }
+        charge.setUser(this);
+        history.add(charge);
+    }
+    
+    public void likeMovie (Movie movie) {
+        if (Objects.isNull(likedMovies)) {
+            likedMovies = new TreeSet<Movie>();
+        }
+        likedMovies.add(movie);
+    }
 }

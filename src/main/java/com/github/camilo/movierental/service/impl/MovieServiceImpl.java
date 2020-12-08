@@ -1,5 +1,7 @@
 package com.github.camilo.movierental.service.impl;
 
+import static com.github.camilo.movierental.exception.ExceptionConstants.MOVIE_NOT_FOUND_EXCEPTION_MESSAGE;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.github.camilo.movierental.exception.MovieNotFoundException;
 import com.github.camilo.movierental.mapper.MovieMapper;
 import com.github.camilo.movierental.messages.MovieDto;
 import com.github.camilo.movierental.model.Movie;
@@ -41,7 +44,7 @@ public class MovieServiceImpl implements MovieService {
             movie = movieRepository.save(movie);
             return Optional.of(MovieMapper.INSTANCE.map(movie));
         }
-        return Optional.empty();//TODO change
+        throw new MovieNotFoundException(MOVIE_NOT_FOUND_EXCEPTION_MESSAGE);
     }
 
     @Override
@@ -50,7 +53,7 @@ public class MovieServiceImpl implements MovieService {
         if (findById.isPresent()) {
             return Optional.of(MovieMapper.INSTANCE.map(findById.get()));
         }
-        return Optional.empty();//TODO change
+        throw new MovieNotFoundException(MOVIE_NOT_FOUND_EXCEPTION_MESSAGE);
     }
 
     @Override

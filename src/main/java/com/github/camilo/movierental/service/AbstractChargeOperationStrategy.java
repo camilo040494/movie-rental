@@ -2,6 +2,8 @@ package com.github.camilo.movierental.service;
 
 import java.util.Optional;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.github.camilo.movierental.mapper.MovieMapper;
 import com.github.camilo.movierental.messages.TransactionDto;
 import com.github.camilo.movierental.model.Charge;
@@ -11,6 +13,7 @@ import com.github.camilo.movierental.model.User;
 public abstract class AbstractChargeOperationStrategy<T extends Charge> implements ChargeOperationStrategy {
 
     @Override
+    @Transactional
     public Optional<TransactionDto> charge(User user, Movie movie) {
         validateMovie(movie);
         
