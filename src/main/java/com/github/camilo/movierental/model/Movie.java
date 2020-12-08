@@ -62,12 +62,4 @@ public class Movie extends BaseEntity {
         history.add(charge);
     }
     
-    public void addStock() {
-        stock++;
-    }
-    
-    public void substractStock() {
-        stock--;
-    }
-    
 }
