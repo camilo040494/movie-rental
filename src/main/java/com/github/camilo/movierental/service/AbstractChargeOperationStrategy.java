@@ -29,7 +29,7 @@ public abstract class AbstractChargeOperationStrategy<T extends Charge> implemen
 
     private void validateMovie(Movie movie) {
         if (movie.getAvailability()) {
-            movie.substractStock();
+            substractStock(movie);
             if (movie.getStock()==0) {
                 movie.setAvailability(false);
             }
@@ -37,7 +37,9 @@ public abstract class AbstractChargeOperationStrategy<T extends Charge> implemen
             throw new RuntimeException("Movie not available at the time");
         }
     }
-
+    public void substractStock(Movie movie) {
+        movie.setStock(movie.getStock()-1);
+    }
     protected abstract T save(T charge);
 
     protected abstract T initializeCharge(Movie movie);
