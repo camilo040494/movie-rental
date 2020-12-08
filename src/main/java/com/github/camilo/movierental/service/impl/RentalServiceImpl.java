@@ -69,7 +69,7 @@ public class RentalServiceImpl implements RentalService {
         BigDecimal profits = new BigDecimal(0);
         Iterable<Charge> findAll = chargeRepository.findAll();
         for (Charge profit : findAll) {
-            Optional<BigDecimal> calculateCost = profit.calculateCost();
+            Optional<BigDecimal> calculateCost = Optional.of(profit.getCost());
             if(calculateCost.isPresent()) {
                 profits = profits.add(calculateCost.get());
             }

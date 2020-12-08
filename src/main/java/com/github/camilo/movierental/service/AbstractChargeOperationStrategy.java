@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import com.github.camilo.movierental.exception.NoStockException;
 import com.github.camilo.movierental.mapper.MovieMapper;
 import com.github.camilo.movierental.messages.TransactionDto;
 import com.github.camilo.movierental.model.Charge;
@@ -32,15 +33,15 @@ public abstract class AbstractChargeOperationStrategy<T extends Charge> implemen
 
     private void validateMovie(Movie movie) {
         if (movie.getAvailability()) {
-            substractStock(movie);
+            subtractStock(movie);
             if (movie.getStock()==0) {
                 movie.setAvailability(false);
             }
         } else {
-            throw new RuntimeException("Movie not available at the time");
+            throw new NoStockException("Movie not available at the time");
         }
     }
-    public void substractStock(Movie movie) {
+    public void subtractStock(Movie movie) {
         movie.setStock(movie.getStock()-1);
     }
     protected abstract T save(T charge);

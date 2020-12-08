@@ -69,5 +69,5 @@ public class Movie extends BaseEntity implements Payable {
         }
         likedUsers.add(user);
     }
-    
+
 }

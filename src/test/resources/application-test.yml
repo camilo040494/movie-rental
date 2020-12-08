@@ -11,3 +11,5 @@ movie:
     days:
       for:
        renting: 3
+    penalty:
+      percentage: 0.05
