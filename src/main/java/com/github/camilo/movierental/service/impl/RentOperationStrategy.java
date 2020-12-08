@@ -1,6 +1,7 @@
 package com.github.camilo.movierental.service.impl;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,11 +43,17 @@ public class RentOperationStrategy extends AbstractChargeOperationStrategy<Rent>
         if (optionalRentedMovie.isPresent()) {
             Rent rentedMovie = optionalRentedMovie.get();
             rentedMovie.setReturned(true);
-            rentedMovie.getMovie().addStock();
+            addStock(rentedMovie.getMovie());
             rentRepository.save(rentedMovie);
             return rentedMovie.calculateCost();
         } else {
             return Optional.empty();
+        }
+    }
+    
+    public void addStock(Movie movie) {
+        if (Objects.nonNull(movie)) {
+            movie.setStock(movie.getStock()+1));
         }
     }
 

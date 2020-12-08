@@ -70,12 +70,4 @@ public class Movie extends BaseEntity implements Payable {
         likedUsers.add(user);
     }
     
-    public void addStock() {
-        stock++;
-    }
-    
-    public void substractStock() {
-        stock--;
-    }
-    
 }
