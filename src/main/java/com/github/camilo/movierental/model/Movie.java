@@ -12,6 +12,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -46,7 +47,8 @@ public class Movie extends BaseEntity implements Payable {
     @Column
     private Boolean availability;
     @Column
-    private byte[] image;
+    @Lob
+    private String image;
     
     @OneToMany(fetch = FetchType.LAZY)
     private Set<Charge> history;

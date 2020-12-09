@@ -36,7 +36,7 @@ public class MovieMapperTest {
         movie.setAvailability(true);
         movie.setDescription(DESCRIPTION);
         movie.setHistory(Sets.newHashSet());
-        movie.setImage(new byte[]{0});
+        movie.setImage("file");
         movie.setDeleted(false);
         movie.setLikedUsers(Sets.newHashSet());
         movie.setRentalPrice(new BigDecimal(12));
@@ -65,7 +65,7 @@ public class MovieMapperTest {
         MovieDto movie = new MovieDto();
         movie.setAvailability(true);
         movie.setDescription(DESCRIPTION);
-        movie.setImage(new byte[]{0});
+        movie.setImage("file");
         movie.setIsDeleted(false);
         movie.setRentalPrice(new BigDecimal(12));
         movie.setSalePrice(new BigDecimal(7));

@@ -7,7 +7,7 @@ import com.github.camilo.movierental.builder.BuyBuilder;
 import com.github.camilo.movierental.model.Buy;
 import com.github.camilo.movierental.model.Movie;
 import com.github.camilo.movierental.repository.ChargeRepository;
-import com.github.camilo.movierental.service.AbstractChargeOperationStrategy;
+import com.github.camilo.movierental.service.strategypattern.AbstractChargeOperationStrategy;
 
 @Service
 public class BuyOperationStrategy extends AbstractChargeOperationStrategy<Buy> {

@@ -8,9 +8,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +34,9 @@ import com.github.camilo.movierental.messages.MovieDto;
 @SpringBootTest
 class MovieRentalApplicationTests {
 
+    private static final String VALID_IMAGE = "src/test/resources/movie_image.png";
+    private static final String INVALID_IMAGE = "src/test/resources/invalid_image.txt";
+
     private MockMvc mockMvc;
     
     @Autowired
@@ -44,13 +51,46 @@ class MovieRentalApplicationTests {
     }
     
     @Test
-    void contextLoads() {
+    void contextLoadsMovieNotFound() {
         try {
             mockMvc.perform(get("/movies/3")).andExpect(status().isNotFound());
         } catch (Exception e) {
             fail();
         }
     }
+    
+    @Test
+    void contextLoadsAddMovieInvalidImageExtension() throws Exception {
+        MovieDto buildMovieDto = MovieMapperTest
+                .buildMovieDto();
+        buildMovieDto.setImage(buildFromImage(INVALID_IMAGE));
+        String content;
+        try {
+            content = objectMapperTest.writeValueAsString(buildMovieDto);
+            mockMvc.perform(post("/movies")
+                    .contentType(MediaType.APPLICATION_JSON).content(content))
+            .andExpect(status().isBadRequest());
+        } catch (JsonProcessingException | UnsupportedEncodingException e) {
+            fail(e.getMessage());
+        }
+    }
+    
+//    @Test
+    void contextLoadsAddMovieInvalidSize() throws Exception {
+        MovieDto buildMovieDto = MovieMapperTest
+                .buildMovieDto();
+        buildMovieDto.setImage(buildFromImage("src/test/resources/zHNEnaG.png"));
+        String content;
+        try {
+            content = objectMapperTest.writeValueAsString(buildMovieDto);
+            mockMvc.perform(post("/movies")
+                    .contentType(MediaType.APPLICATION_JSON).content(content))
+            .andExpect(status().isBadRequest());
+        } catch (JsonProcessingException | UnsupportedEncodingException e) {
+            fail(e.getMessage());
+        }
+    }
+    
     @Test
     void contextLoadsAdd() throws Exception {
         try {
@@ -61,8 +101,10 @@ class MovieRentalApplicationTests {
             .andExpect(status().isCreated())
             .andExpect(jsonPath("$.email").value(EMAIL));
             
-            String content = objectMapperTest.writeValueAsString(MovieMapperTest
-                    .buildMovieDto());
+            MovieDto buildMovieDto = MovieMapperTest
+                    .buildMovieDto();
+            buildMovieDto.setImage(buildFromImage(VALID_IMAGE));
+            String content = objectMapperTest.writeValueAsString(buildMovieDto);
             MvcResult response = mockMvc.perform(post("/movies")
                     .contentType(MediaType.APPLICATION_JSON).content(content))
             .andExpect(status().isCreated())
@@ -103,6 +145,17 @@ class MovieRentalApplicationTests {
         } catch (JsonProcessingException | UnsupportedEncodingException e) {
             fail(e.getMessage()+"\n"+e.getLocalizedMessage()+"\n"+e.getCause().toString());
         }
+    }
+
+    private String buildFromImage(String image) {
+        File file = new File(image);
+        byte[] readFileToByteArray = new byte[] {};
+        try {
+            readFileToByteArray = FileUtils.readFileToByteArray(file);
+        } catch (IOException e) {
+            fail(e.getMessage());
+        }
+        return Base64.encodeBase64String(readFileToByteArray);
     }
     
 }

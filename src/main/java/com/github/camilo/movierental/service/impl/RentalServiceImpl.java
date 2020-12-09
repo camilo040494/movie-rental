@@ -20,9 +20,9 @@ import com.github.camilo.movierental.model.User;
 import com.github.camilo.movierental.repository.ChargeRepository;
 import com.github.camilo.movierental.repository.MovieRepository;
 import com.github.camilo.movierental.repository.UserRepository;
-import com.github.camilo.movierental.service.ChargeOperationStrategy;
 import com.github.camilo.movierental.service.RentOperationService;
 import com.github.camilo.movierental.service.RentalService;
+import com.github.camilo.movierental.service.strategypattern.ChargeOperationStrategy;
 
 @Service
 public class RentalServiceImpl implements RentalService {

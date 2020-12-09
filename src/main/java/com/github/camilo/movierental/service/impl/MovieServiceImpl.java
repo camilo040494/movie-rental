@@ -2,25 +2,33 @@ package com.github.camilo.movierental.service.impl;
 
 import static com.github.camilo.movierental.exception.ExceptionConstants.MOVIE_NOT_FOUND_EXCEPTION_MESSAGE;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.github.camilo.movierental.ConvertFileUtils;
 import com.github.camilo.movierental.exception.MovieNotFoundException;
 import com.github.camilo.movierental.mapper.MovieMapper;
 import com.github.camilo.movierental.messages.MovieDto;
 import com.github.camilo.movierental.model.Movie;
 import com.github.camilo.movierental.repository.MovieRepository;
 import com.github.camilo.movierental.service.MovieService;
+import com.github.camilo.movierental.service.chainofresponsabilities.FileValidator;
 
 @Service
 public class MovieServiceImpl implements MovieService {
 
     @Autowired
     private MovieRepository movieRepository;
+    
+    @Autowired
+    @Qualifier("fileValidator")
+    private FileValidator fileValidator;
     
     @Override
     public List<MovieDto> list(Pageable pageable) {
@@ -30,6 +38,8 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public MovieDto create(MovieDto movieDto) {
+        File file = ConvertFileUtils.parseContentToFile(movieDto.getImage());
+        fileValidator.validate(file);
         Movie movie = MovieMapper.INSTANCE.map(movieDto);
         movie = movieRepository.save(movie);
         return MovieMapper.INSTANCE.map(movie);

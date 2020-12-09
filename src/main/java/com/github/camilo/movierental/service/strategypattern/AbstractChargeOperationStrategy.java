@@ -1,4 +1,4 @@
-package com.github.camilo.movierental.service;
+package com.github.camilo.movierental.service.strategypattern;
 
 import java.util.Optional;
 

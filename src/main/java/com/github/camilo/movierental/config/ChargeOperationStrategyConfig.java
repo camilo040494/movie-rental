@@ -7,9 +7,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.github.camilo.movierental.model.OperationEnum;
-import com.github.camilo.movierental.service.ChargeOperationStrategy;
 import com.github.camilo.movierental.service.impl.BuyOperationStrategy;
 import com.github.camilo.movierental.service.impl.RentOperationStrategy;
+import com.github.camilo.movierental.service.strategypattern.ChargeOperationStrategy;
 
 @Configuration
 public class ChargeOperationStrategyConfig {

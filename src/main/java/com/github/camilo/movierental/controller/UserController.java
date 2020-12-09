@@ -3,6 +3,8 @@ package com.github.camilo.movierental.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +26,7 @@ import com.github.camilo.movierental.service.UserService;
 
 @RestController
 @RequestMapping("/users")
+@RolesAllowed({"ROLE_ADMIN", "ROLE_EMPLOY"})
 public class UserController {
 
     @Autowired

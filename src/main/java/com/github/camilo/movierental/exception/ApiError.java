@@ -1,4 +1,4 @@
-package com.github.camilo.movierental.config;
+package com.github.camilo.movierental.exception;
 
 import java.time.LocalDateTime;
 

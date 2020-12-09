@@ -16,7 +16,7 @@ public class MovieDto implements Serializable{
     private BigDecimal rentalPrice;
     private BigDecimal salePrice;
     private Boolean availability;
-    private byte[] image;
+    private String image;
     private Boolean isDeleted;
     
 }
