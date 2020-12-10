@@ -10,7 +10,7 @@ spring:
       ddl-auto: validate
     format_sql: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/postgres
+    url: ${SPRING_DATASOURCE_URL}
     driverClassName: org.postgresql.Driver
     username: postgres
     password: password

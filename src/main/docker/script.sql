@@ -67,4 +67,6 @@ insert into application_user(id, email, enabled, first_name, last_name, password
 	values(1, 'test@correo.com', true, 'admin', 'admin',
 	'$2a$10$/lTgmWnvno15Zm9LqrKpfOYA14ccG6KxScWNKnPvWPf5Tbgx641zm', false);
 insert into role(id, name) values (1, 'ROLE_ADMIN');
+insert into role(id, name) values (2, 'ROLE_USER');
+insert into role(id, name) values (3, 'ROLE_EMPLOYEE');
 insert into users_roles (user_id, role_id) values(1, 1);

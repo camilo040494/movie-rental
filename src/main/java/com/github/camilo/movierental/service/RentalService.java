@@ -13,5 +13,7 @@ public interface RentalService{
     Optional<BigDecimal> returnMovie(String transactionId, String userEmail);
 
     BigDecimal calculateProfits();
+
+    Optional<TransactionDto> likeMovie(String userEmail, long movieId);
     
 }
