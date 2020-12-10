@@ -22,7 +22,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "user")
+@Table(name = "application_user")
 @Getter
 @Setter
 public class User extends BaseEntity {
@@ -49,11 +49,12 @@ public class User extends BaseEntity {
     private boolean tokenExpired;
     
     @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_history") 
     private Set<Charge> history;
     
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable( 
-            name = "user_movies", 
+            name = "user_liked_movies", 
             joinColumns = @JoinColumn(
                     name = "user_id", referencedColumnName = "id"), 
             inverseJoinColumns = @JoinColumn(

@@ -1,8 +1,11 @@
 spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      globally_quoted_identifiers: true
+      ddl-auto: create
   datasource:
-    url: jdcb:h2:mem:testdb
+    url: jdbc:h2:mem:testdb;MODE=PostgreSQL
     driverClassName: org.h2.Driver
     username: sa
     password: sa

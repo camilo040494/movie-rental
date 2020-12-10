@@ -12,6 +12,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -51,9 +53,19 @@ public class Movie extends BaseEntity implements Payable {
     private String image;
     
     @OneToMany(fetch = FetchType.LAZY)
+    @JoinTable( 
+            name = "movie_history", 
+            inverseJoinColumns = @JoinColumn(
+                    name = "charge_id", referencedColumnName = "id")) 
     private Set<Charge> history;
     
     @ManyToMany
+    @JoinTable( 
+            name = "movie_users", 
+            joinColumns = @JoinColumn(
+                    name = "user_id", referencedColumnName = "id"), 
+            inverseJoinColumns = @JoinColumn(
+                    name = "movie_id", referencedColumnName = "id"))
     private Set<User> likedUsers;
     
     @Override
