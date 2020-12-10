@@ -1,0 +1,20 @@
+version: '3'
+services:
+  postgresdb:
+    image: postgres:11.1
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - 5433:5432
+    volumes:
+      - ./script.sql:/docker-entrypoint-initdb.d/init.sql
+  movierental:
+    image: docker-movie-rental:latest
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - postgresdb
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresdb:5432/postgres
