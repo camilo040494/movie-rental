@@ -5,16 +5,23 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
+import com.github.camilo.movierental.exception.CreationException;
+import com.github.camilo.movierental.exception.ExceptionConstants;
 import com.github.camilo.movierental.model.Charge;
 import com.github.camilo.movierental.model.Movie;
 import com.github.camilo.movierental.model.User;
 
 public abstract class ChargeBuilder<T extends Charge> {
     
+    
     protected T charge;
     
-    public ChargeBuilder(Class<T> clazz) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
-        charge = clazz.getDeclaredConstructor().newInstance();
+    public ChargeBuilder(Class<T> clazz) {
+        try {
+            charge = clazz.getDeclaredConstructor().newInstance();            
+        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            throw new CreationException(ExceptionConstants.AN_ERROR_OCURRED_TRYING_TO_PROCESS_THE_TRANSACTION, e.getMessage());
+        }
     }
     
     public ChargeBuilder<T> buildEmptyEntity() {
