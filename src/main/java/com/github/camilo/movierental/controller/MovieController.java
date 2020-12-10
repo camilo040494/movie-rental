@@ -42,7 +42,7 @@ public class MovieController {
     @GetMapping
     @ResponseBody
     public ResponseEntity<List<MovieDto>> list(@RequestParam("page") int page, @RequestParam("numberOfResults") int numberOfResults){
-        List<MovieDto> list = movieService.list(PageRequest.of(page, numberOfResults));
+        List<MovieDto> list = movieService.list(PageRequest.of(page+1, numberOfResults));
         if (CollectionUtils.isNotEmpty(list)) {
             return new ResponseEntity<List<MovieDto>>(list, HttpStatus.OK);
         } else

@@ -45,7 +45,7 @@ public class UserController {
     @GetMapping
     @ResponseBody
     public ResponseEntity<List<UserDto>> list(@RequestParam("page") int page, @RequestParam("numberOfResults") int numberOfResults){
-        List<UserDto> list = userService.list(PageRequest.of(page, numberOfResults));
+        List<UserDto> list = userService.list(PageRequest.of(page+1, numberOfResults));
         if (CollectionUtils.isNotEmpty(list)) {
             return new ResponseEntity<List<UserDto>>(list, HttpStatus.OK);
         } else
