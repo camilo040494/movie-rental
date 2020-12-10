@@ -13,6 +13,8 @@ services:
     image: docker-movie-rental:latest
     build:
       context: .
+    ports:
+      - 8080:8080
     container_name: app
     depends_on:
       - postgresdb
