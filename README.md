@@ -13,6 +13,8 @@
 ## Default admin user
 	- username: test@correo.com
 	- password: admin
+	
+	Please keep in mind, to perform like, rent and buy operations, it is not requested an user because it will take the local user
 
 ## Swagger
 	After being authenticated you may access swagger URL (localhost:8080/swagger-ui.html) to see documentation of endpoints.
