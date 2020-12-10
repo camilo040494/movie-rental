@@ -37,6 +37,18 @@ public class RentalController{
         return new ResponseEntity<TransactionDto>(HttpStatus.NOT_FOUND);
     }
     
+    @PostMapping(value = "/like/{movieId}")
+    @ResponseBody
+    public ResponseEntity<TransactionDto> likeMovie(@PathVariable long movieId,
+            Principal principal){
+        Optional<TransactionDto> transaction = rentalService.likeMovie(principal.getName(),
+                movieId);
+        if (transaction.isPresent()) {
+            return new ResponseEntity<TransactionDto>(transaction.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<TransactionDto>(HttpStatus.NOT_FOUND);
+    }
+    
     @PostMapping(value = "/return/{transactionId}")
     @ResponseBody
     public ResponseEntity<BigDecimal> returnMovie(@PathVariable String transactionId,

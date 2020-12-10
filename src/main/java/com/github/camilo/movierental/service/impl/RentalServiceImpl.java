@@ -27,8 +27,6 @@ import com.github.camilo.movierental.service.strategypattern.ChargeOperationStra
 @Service
 public class RentalServiceImpl implements RentalService {
 
-    
-
     @Autowired
     private ChargeRepository<Charge> chargeRepository;
     
@@ -75,6 +73,24 @@ public class RentalServiceImpl implements RentalService {
             }
         }
         return profits;
+    }
+
+    @Override
+    public Optional<TransactionDto> likeMovie(String userEmail, long movieId) {
+        Optional<User> findByEmail = userRepository.findByEmail(userEmail);
+        if (findByEmail.isEmpty()) {
+            throw new UserNotFoundException(USER_NOT_FOUND_EXCEPTION_MESSAGE);
+        }
+        Optional<Movie> findById = movieRepository.findById(Long.valueOf(movieId));
+        if (findById.isPresent()) {
+            Movie movie = findById.get();
+            User user = findByEmail.get();
+            user.likeMovie(movie);
+            movie.likeUser(user);
+            movieRepository.save(movie);
+            userRepository.save(user);
+        }
+        throw new MovieNotFoundException(MOVIE_NOT_FOUND_EXCEPTION_MESSAGE);
     }
 
 }
