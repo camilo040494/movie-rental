@@ -1,5 +1,6 @@
 package com.github.camilo.movierental.builder;
 
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.UUID;
@@ -12,12 +13,8 @@ public abstract class ChargeBuilder<T extends Charge> {
     
     protected T charge;
     
-    public ChargeBuilder(Class<T> clazz) {
-        try {
-            charge = clazz.getDeclaredConstructor().newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException("Failed the builder");
-        }
+    public ChargeBuilder(Class<T> clazz) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
+        charge = clazz.getDeclaredConstructor().newInstance();
     }
     
     public ChargeBuilder<T> buildEmptyEntity() {

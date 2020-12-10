@@ -10,7 +10,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.github.camilo.movierental.exception.ApiError;
-import com.github.camilo.movierental.exception.InvalidFileExtension;
+import com.github.camilo.movierental.exception.InvalidFileException;
 import com.github.camilo.movierental.exception.MovieNotFoundException;
 import com.github.camilo.movierental.exception.NoStockException;
 import com.github.camilo.movierental.exception.UserNotFoundException;
@@ -24,7 +24,7 @@ public class ErrorHandler extends ResponseEntityExceptionHandler {
       return buildResponseEntity(new ApiError(HttpStatus.NOT_FOUND, ex.getMessage()));
     }
     
-    @ExceptionHandler(value = { NoStockException.class, InvalidFileExtension.class })
+    @ExceptionHandler(value = { NoStockException.class, InvalidFileException.class })
     protected ResponseEntity<Object> handleBadRequest(RuntimeException ex, WebRequest request) {
         return buildResponseEntity(new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage()));
     }

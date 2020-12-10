@@ -12,7 +12,7 @@ import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import com.github.camilo.movierental.exception.InvalidFileExtension;
+import com.github.camilo.movierental.exception.InvalidFileException;
 import com.github.camilo.movierental.service.chainofresponsabilities.FileValidator;
 import com.j256.simplemagic.ContentInfo;
 import com.j256.simplemagic.ContentInfoUtil;
@@ -41,19 +41,19 @@ public class FileNameValidator extends FileValidator{
             info = util.findMatch(file.getAbsolutePath());
         } catch (IOException e) {
             log.error(LOG_IO_READING, e.getCause());
-            throw new InvalidFileExtension(LOG_IO_READING);
+            throw new InvalidFileException(LOG_IO_READING);
         }
 
       if (Objects.isNull(info)) {
           log.error(LOG_CORRUPTED_FILE, file.getName());
-          throw new InvalidFileExtension(LOG_CORRUPTED_FILE);
+          throw new InvalidFileException(LOG_CORRUPTED_FILE);
       }
 
       String contentType = info.getContentType().toString();
 
       if (!checkContentType(contentType.toLowerCase())) {
           log.error(LOG_INVALID_FILE_EXTENSION, contentType.toLowerCase());
-          throw new InvalidFileExtension(LOG_INVALID_FILE_EXTENSION);
+          throw new InvalidFileException(LOG_INVALID_FILE_EXTENSION);
       }
 
         checkNext(file);

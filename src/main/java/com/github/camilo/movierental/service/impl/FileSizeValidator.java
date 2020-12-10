@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.springframework.stereotype.Service;
 
-import com.github.camilo.movierental.exception.InvalidFileExtension;
+import com.github.camilo.movierental.exception.InvalidFileException;
 import com.github.camilo.movierental.service.chainofresponsabilities.FileValidator;
 
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +25,7 @@ public class FileSizeValidator extends FileValidator{
         size = file.length() / (1024 * 1024);
         if (size >= FILE_SIZE_IN_MB) {
             log.error(LOG_ATTACHED_FILE_TOO_LONG);
-            throw new InvalidFileExtension(LOG_ATTACHED_FILE_TOO_LONG);
+            throw new InvalidFileException(LOG_ATTACHED_FILE_TOO_LONG);
         }
 
         checkNext(file);
