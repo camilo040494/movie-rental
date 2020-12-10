@@ -1,4 +1,4 @@
-package com.github.camilo.movierental;
+package com.github.camilo.movierental.util;
 
 import java.io.File;
 import java.io.IOException;

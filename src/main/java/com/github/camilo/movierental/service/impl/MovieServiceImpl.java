@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.github.camilo.movierental.ConvertFileUtils;
 import com.github.camilo.movierental.exception.MovieNotFoundException;
 import com.github.camilo.movierental.mapper.MovieMapper;
 import com.github.camilo.movierental.messages.MovieDto;
@@ -19,6 +18,7 @@ import com.github.camilo.movierental.model.Movie;
 import com.github.camilo.movierental.repository.MovieRepository;
 import com.github.camilo.movierental.service.MovieService;
 import com.github.camilo.movierental.service.chainofresponsabilities.FileValidator;
+import com.github.camilo.movierental.util.ConvertFileUtils;
 
 @Service
 public class MovieServiceImpl implements MovieService {
