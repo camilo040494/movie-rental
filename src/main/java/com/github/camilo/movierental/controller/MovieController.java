@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,8 +40,8 @@ public class MovieController {
     
     @GetMapping
     @ResponseBody
-    public ResponseEntity<List<MovieDto>> list(@RequestParam("page") int page, @RequestParam("numberOfResults") int numberOfResults){
-        List<MovieDto> list = movieService.list(PageRequest.of(page+1, numberOfResults));
+    public ResponseEntity<List<MovieDto>> list(Pageable pageable){
+        List<MovieDto> list = movieService.list(pageable);
         if (CollectionUtils.isNotEmpty(list)) {
             return new ResponseEntity<List<MovieDto>>(list, HttpStatus.OK);
         } else

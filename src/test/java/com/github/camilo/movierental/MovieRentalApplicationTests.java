@@ -141,7 +141,7 @@ class MovieRentalApplicationTests {
             
             mockMvc.perform(get("/movies")
                     .queryParam("page", "0")
-                    .queryParam("numberOfResults", "1"))
+                    .queryParam("size", "1"))
             .andExpect(status().isOk());
             
         } catch (JsonProcessingException | UnsupportedEncodingException e) {
