@@ -19,6 +19,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -50,6 +52,7 @@ public class Movie extends BaseEntity implements Payable {
     private Boolean availability;
     @Column
     @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String image;
     
     @OneToMany(fetch = FetchType.LAZY)

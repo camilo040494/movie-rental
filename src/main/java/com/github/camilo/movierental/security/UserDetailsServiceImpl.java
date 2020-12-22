@@ -1,4 +1,4 @@
-package com.github.camilo.movierental.config;
+package com.github.camilo.movierental.security;
 
 import java.util.ArrayList;
 import java.util.List;

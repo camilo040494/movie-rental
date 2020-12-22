@@ -10,7 +10,7 @@ spring:
       ddl-auto: validate
     format_sql: true
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
+    url: jdbc:postgresql://192.168.0.22:5432/postgres
     driverClassName: org.postgresql.Driver
     username: postgres
     password: password
@@ -18,7 +18,7 @@ spring:
     #  initial-size: 1
   security:
     secret:
-      key: secreto
+      key: verylongsecretkeyforencryptionconstraintintjwt
 logging:
   level:
     org:

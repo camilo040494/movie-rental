@@ -42,3 +42,12 @@
 	docker-compose up
 	```
 	
+## Test
+Try this :
+```
+http://localhost:8080/movies?pageNumber=1&pageSize=1
+```
+Login:
+```
+curl -i -H "Content-Type: application/json" -X POST -d '{ "username": "test@correo.com", "password": "admin"}' http://localhost:8080/login
+```
